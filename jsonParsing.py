@@ -7,7 +7,7 @@ CONFIG={}
 
 #<filename>->jsonfile transfer python
 def readConfig(filename) :
-	f = open("example4.txt", 'r')
+	f = open(filename, 'r')
 	temp = f.read().replace('\'','')
 	temp = temp[1:]
 	js = json.loads(temp)
