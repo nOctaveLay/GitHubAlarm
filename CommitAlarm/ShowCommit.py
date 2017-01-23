@@ -2,26 +2,26 @@ from urllib.request import *
 from Changeform import * 
 from ReadWrite import *
 import datetime
-def pass_internetfile():
-	users = input("What is your username? ")
-	openfile = open("follower.txt",'w')
-	url = "http://api.github.com/users/"+ users + "/following"
+
+def pass_internetfile(users,textfile,setting):
+	openfile = open(textfile,'w')
+	url = "http://api.github.com/users/"+ users + setting
 	opener = urlopen(url).read()
 	openfile.write(str(opener))
 	openfile.close()
+	result = readConfig(textfile)
+	return result
 
-def events(who):
-	# url = "http://api.github.com/users/" + who + "/events"
-	# Commit = urlopen(url).read()
-	# show_clear(str(Commit))
-	list_con = readConfig("clear")
 def following_github():
-	# pass_internetfile()
-	followingList = readConfig("follower.txt")
+	users = input("What is your username? ")
+	followingList = pass_internetfile(users,"follower.txt","/following")
 	# show_clear(str(followingList))
 	goal_show = 0
 	list_push = []
-	events(followingList[0]["login"])
+	for following_elem in followingList:
+		result = pass_internetfile(following_elem["login"],"followers_events.txt","/events")
+		print(result)
+	# pass_internetfile(followingList[0]["login"],"followers_events.txt","/events")
 	# while goal_show != len(followingList):
 	# openfile = open("temp.txt","w")
 	# who = login_id["login"]
