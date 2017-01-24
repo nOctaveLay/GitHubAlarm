@@ -14,3 +14,9 @@ def setting_show():
 		print("Please input right answer")
 		show = input("How do you see? (please input number) ")		
 	return int(show)
+
+def printForm(printlist):
+	temp = 0
+	while temp != len(printlist):
+		print(printlist[temp]["who"]+"\'s commit is",printlist[temp]["commit_number"])
+		temp += 1
