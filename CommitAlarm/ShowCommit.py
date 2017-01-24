@@ -21,31 +21,14 @@ def following_github():
 	for following_elem in followingList:
 		result = pass_internetfile(following_elem["login"],"followers_events.txt","/events")
 		print(result)
-	# pass_internetfile(followingList[0]["login"],"followers_events.txt","/events")
-	# while goal_show != len(followingList):
-	# openfile = open("temp.txt","w")
-	# who = login_id["login"]
-	# Commit = urlopen(url).read()
-	# openfile.write(str(Commit))
-	# openfile.close()
-	# print(type(Commit))
-	# print()
-	print(goal_show)
-	goal_show += 1
-		# commit_constant = 0
-		# print(len(Commit))
-		# while commit_constant != len(Commit):
-		# 	Commit_local = Commit[commit_constant]
-		# 	commit_constant += 1
-		# 	github_type = Commit_local["type"]
-		# 	github_time = Commit_local["created_at"]
-		# 	print(github_time)
-		# 	github_time.split("T")
-		# 	now_time = datetime.date.today()
-		# 	if github_time[0] == now_time.isoformat():
-		# 		list_push.append({"type":github_type,"time":github_time})
-		# 	else: break
-		# github_commit = CommitUrl["payload"]["commits"]
-		# commitR = urlopen(CommitUrl).read()
-		# print(commitR)
+		for num in range(len(result)):
+			date = result[num]["created_at"]
+			date = date.split("T")
+			now_time = datetime.date.today()
+			if date[0] == now_time.isoformat():
+				time.append("T".join(date))
+		commit_number = len(time)
+		who_commit = {"who":who,"commit_number":commit_number}
+		list_push.append(who_commit)
+	printForm(list_push)
 following_github()
