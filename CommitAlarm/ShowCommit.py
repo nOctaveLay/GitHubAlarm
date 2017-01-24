@@ -4,10 +4,10 @@ from ReadWrite import *
 import datetime
 
 def pass_internetfile(users,textfile,setting):
-	openfile = open(textfile,'w')
+	openfile = open(textfile,'wb')
 	url = "http://api.github.com/users/"+ users + setting
 	opener = urlopen(url).read()
-	openfile.write(str(opener))
+	openfile.write(opener)
 	openfile.close()
 	result = readConfig(textfile)
 	return result
@@ -18,9 +18,11 @@ def following_github():
 	# show_clear(str(followingList))
 	goal_show = 0
 	list_push = []
+	time = []
+	#O(n^2), Sorry, I revise the big afterwards .
 	for following_elem in followingList:
-		result = pass_internetfile(following_elem["login"],"followers_events.txt","/events")
-		print(result)
+		who = following_elem["login"]
+		result = pass_internetfile(who,"followers_events.txt","/events")
 		for num in range(len(result)):
 			date = result[num]["created_at"]
 			date = date.split("T")
