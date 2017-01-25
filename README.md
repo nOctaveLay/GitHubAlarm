@@ -1,9 +1,9 @@
 it is very Simple? Git Hub Alarm
 
 //>> WARNING <<
-1. be careful not autometic - to join password.
+1. Not fully automated - password input is necessary
 
-2. please free to change by full request. please.... like encryption
+2. Welcome pull request .... especially encryption parts
 
 3. GitAlarm is to show the Github Alarm in terminal 
 
