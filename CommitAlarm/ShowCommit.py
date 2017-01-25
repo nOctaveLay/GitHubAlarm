@@ -2,7 +2,6 @@
 #but I know that using "github3.py" is easy. So I append the file, "github3.py" to Directory "USEGITHUB3"
 
 from urllib.request import *
-from Changeform import * 
 from ReadWrite import *
 import datetime
 import sys
