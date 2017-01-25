@@ -32,7 +32,6 @@ def following_github():
 			now_time = datetime.date.today()
 			if date[0] == now_time.isoformat():
 				time.append("T".join(date))
-		print("time:",time)
 		commit_number = len(time)
 		who_commit = {"who":who,"commit_number":commit_number}
 		list_push.append(who_commit)
