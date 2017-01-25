@@ -1,3 +1,6 @@
+# IT IS not using "github3.py"
+#but I know that using "github3.py" is easy. So I append the file, "github3.py" to Directory "USEGITHUB3"
+
 from urllib.request import *
 from Changeform import * 
 from ReadWrite import *
@@ -18,9 +21,9 @@ def following_github():
 	# show_clear(str(followingList))
 	goal_show = 0
 	list_push = []
-	time = []
 	#O(n^2), Sorry, I revise the big afterwards .
 	for following_elem in followingList:
+		time = []
 		who = following_elem["login"]
 		result = pass_internetfile(who,"followers_events.txt","/events")
 		for num in range(len(result)):
@@ -29,8 +32,10 @@ def following_github():
 			now_time = datetime.date.today()
 			if date[0] == now_time.isoformat():
 				time.append("T".join(date))
+		print("time:",time)
 		commit_number = len(time)
 		who_commit = {"who":who,"commit_number":commit_number}
 		list_push.append(who_commit)
 	printForm(list_push)
+	k = input("Type any Key...")
 following_github()
