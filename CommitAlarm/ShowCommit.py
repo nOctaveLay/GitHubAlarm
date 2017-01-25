@@ -5,6 +5,8 @@ from urllib.request import *
 from Changeform import * 
 from ReadWrite import *
 import datetime
+import sys
+from PyQt5.QtWidgets import (QWidget, QLabel, QGridLayout, QApplication)
 
 def pass_internetfile(users,textfile,setting):
 	openfile = open(textfile,'wb')
@@ -35,6 +37,33 @@ def following_github():
 		commit_number = len(time)
 		who_commit = {"who":who,"commit_number":commit_number}
 		list_push.append(who_commit)
-	printForm(list_push)
-	k = input("Type any Key...")
-following_github()
+	return list_push
+
+#Qt5 GUI
+class show_commit(QWidget):
+	
+	def __init__(self):
+		super().__init__()
+		self.list = following_github()
+		self.initUI()
+		
+	def initUI(self):
+		grid = QGridLayout()
+		grid.setSpacing(10)
+		list_size = len(self.list)
+		for listelem in range(list_size):
+			followerL = QLabel(self.list[listelem]["who"]+"\'s commit is "+str(self.list[listelem]["commit_number"]))
+			grid.addWidget(followerL,listelem,0)
+
+		self.setLayout(grid) 
+		self.setGeometry(list_size*50, list_size*50, 350, 300)
+		self.setWindowTitle('Show Commit')	
+		self.show()
+		
+		
+if __name__ == '__main__':
+	
+	app = QApplication(sys.argv)
+	ex = show_commit()
+	sys.exit(app.exec_())
+
