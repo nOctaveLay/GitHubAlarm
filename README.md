@@ -9,4 +9,10 @@ it is very Simple? Git Hub Alarm
 
 4. CommitAlarm is to show Commit's number (followers\' commit number) 
 
-5. GitAlarm\'s runfile is GitAlarm.py, CommitAlarm\'s runfile is ShowCommit.py
+5. GitAlarm\'s runfile is GitAlarm.py, CommitAlarm\'s runfile is ShowCommit.
+
+
+will be make
+first - week show. Who is best? Who is worst?
+second - yesterday show. ... MUST NEED TO CHEAK the file
+third - month show. it is updated 
