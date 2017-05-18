@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import (QWidget, QLabel, QGridLayout, QApplication)
 
 def pass_internetfile(users,textfile,setting):
 	openfile = open(textfile,'wb')
-	url = "http://api.github.com/users/"+ users + setting
+	url = "https://api.github.com/users/"+ users + setting
 	opener = urlopen(url).read()
 	openfile.write(opener)
 	openfile.close()
