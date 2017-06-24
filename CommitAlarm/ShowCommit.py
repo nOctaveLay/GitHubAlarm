@@ -4,8 +4,9 @@
 from urllib.request import *
 from ReadWrite import *
 import datetime
-import sys
+import sys,json
 from PyQt5.QtWidgets import (QWidget, QLabel, QGridLayout, QApplication)
+from PyQt5.QtCore import QTimer
 
 def pass_internetfile(users,textfile,setting):
 	openfile = open(textfile,'wb')
@@ -14,10 +15,16 @@ def pass_internetfile(users,textfile,setting):
 	openfile.write(opener)
 	openfile.close()
 	result = readConfig(textfile)
+	openfile = open(textfile,'wb')
+	openfile.close()
 	return result
 
 def following_github():
 	users = input("What is your username? ")
+	users.replace(" ","")
+	while users == '':
+		print("input again")
+		users = input("What is your username? ")
 	followingList = pass_internetfile(users,"follower.txt","/following")
 	# show_clear(str(followingList))
 	goal_show = 0
@@ -47,22 +54,35 @@ class show_commit(QWidget):
 		self.initUI()
 		
 	def initUI(self):
-		grid = QGridLayout()
-		grid.setSpacing(10)
-		list_size = len(self.list)
-		for listelem in range(list_size):
-			followerL = QLabel(self.list[listelem]["who"]+"\'s commit is "+str(self.list[listelem]["commit_number"]))
-			grid.addWidget(followerL,listelem,0)
-
-		self.setLayout(grid) 
-		self.setGeometry(list_size*50, list_size*50, 350, 300)
+		self.time = 60
+		self.Label_follow = []
+		self.setting_commit()
 		self.setWindowTitle('Show Commit')	
 		self.show()
+	
+	def setting_commit(self):
+		self.grid = QGridLayout()
+		self.grid.setSpacing(10)
+		list_size = len(self.list)
+		for list_num in range(list_size):
+			self.Label_follow.append(QLabel(self.list[list_num]["who"]+"\'s commit is "+str(self.list[list_num]["commit_number"])))
+			self.grid.addWidget(self.Label_follow[list_num],list_num,0)
+		self.setLayout(self.grid) 
+		self.setGeometry(list_size*50, list_size*50, 350, 300)
 		
-		
+	def update_time(self):
+		self.time -= 1
+		if self.time < 1:
+			self.time = 60
+			[self.Label_follow[i].clear() for i in range(len(self.Label_follow))]
+			self.setting_commit()
+
 if __name__ == '__main__':
 	
 	app = QApplication(sys.argv)
 	ex = show_commit()
+	timer = QTimer()
+	timer.timeout.connect(ex.update_time)
+	timer.start(1000)
 	sys.exit(app.exec_())
 
