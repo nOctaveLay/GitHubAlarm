@@ -7,10 +7,8 @@ def pass_internetfile():
 
 	#make HTTPBasicAuthHandler, object => it can add the password. 
 	auth_handler = HTTPBasicAuthHandler()
-	
-	#file open, that is written user's received_events
-	openfile = open("internetfile.txt",'w')
-	urlu = "http://api.github.com/users/"+ users + "/received_events"
+
+	urlu = f"http://api.github.com/users/{users}/received_events"
 	
 	# add password in url_u by using users and password
 	auth_handler.add_password(None, urlu, users,passwd )
@@ -23,6 +21,8 @@ def pass_internetfile():
 	
 	#read the server's data
 	read = opener.open(urlu).read()
-	openfile.write(str(read))
-	openfile.close()
+
+	#file open, that is written user's received_events
+	with open("internetfile.txt",'w') as f:
+		f.write(str(read))
 

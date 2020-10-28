@@ -7,7 +7,7 @@ def typecorrect(gittype):
 
 def setting_show():
 	show = input("How do you see? (please input number) ")
-	while show.isdigit() == False:
+	while not show.isdigit():
 		print("You put the incorrect answer")
 		print("Please input right answer")
 		show = input("How do you see? (please input number) ")		
