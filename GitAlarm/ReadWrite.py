@@ -3,19 +3,15 @@ from HTTPBA import *
 CONFIG_FILE="internetfile.txt" #hidden
 CONFIG={}
 #<filename>->jsonfile transfer python
-def readConfig(filename) :
-	f = open(filename, 'r')
-	temp = f.read().replace('\'','')
-	temp = temp[1:]
-	js = json.loads(temp)
-	f.close()
+def readConfig(filename:str) :
+	with open(file=filename, mode='r') as f:
+		temp = f.read().replace('\'','')[1:]
+		js = json.loads(temp)
 	return js
 
 #save the data
-def writeConfig(filename,data) :
-	f = open(filename,'w')
-	for x in data:
-		f.write(str(x))
-		f.write("\n")
-	f.close()
-	
+def writeConfig(filename:str,data:list) :
+	string = ""
+	string += f"{x}\n" for x in data
+	with open(file=filename, mode='w') as f:
+		f.write(string)

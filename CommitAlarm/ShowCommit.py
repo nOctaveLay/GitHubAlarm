@@ -8,21 +8,20 @@ import sys,json
 from PyQt5.QtWidgets import (QWidget, QLabel, QGridLayout, QApplication)
 from PyQt5.QtCore import QTimer
 
-def pass_internetfile(users,textfile,setting):
-	openfile = open(textfile,'wb')
-	url = "https://api.github.com/users/"+ users + setting
+def pass_internetfile(users:str,textfile:str,setting:str):
+	url = f"https://api.github.com/users/{users}{setting}"
 	opener = urlopen(url).read()
-	openfile.write(opener)
-	openfile.close()
+	
+	with open(textfile,'wb') as f:
+		openfile.write(opener)
+	
 	result = readConfig(textfile)
-	openfile = open(textfile,'wb')
-	openfile.close()
 	return result
 
 def following_github():
 	users = input("What is your username? ")
-	users.replace(" ","")
-	while users == '':
+	users = users.strip()
+	while not users:
 		print("input again")
 		users = input("What is your username? ")
 	followingList = pass_internetfile(users,"follower.txt","/following")
