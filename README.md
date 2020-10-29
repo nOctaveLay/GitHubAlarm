@@ -11,7 +11,11 @@ it is very Simple? Git Hub Alarm
 4. GitAlarm\'s runfile is GitAlarm.py, CommitAlarm\'s runfile is ShowCommit.
 
 
-will be make
-first - week show. Who is best? Who is worst?
-second - yesterday show. ... MUST NEED TO CHEAK the file
-third - month show. it is updated 
+# want to make
+want to show :
+1. 'Who is best? Who is worst?'
+- check the the number of commit and show who is the best attributor.
+2. show the number of yesterday commit.
+- you must need to check the file
+3. show the number of monthly commit.
+- it should be updated 
