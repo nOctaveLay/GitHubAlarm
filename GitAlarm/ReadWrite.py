@@ -2,6 +2,7 @@ import json
 from HTTPBA import *
 CONFIG_FILE="internetfile.txt" #hidden
 CONFIG={}
+
 #<filename>->jsonfile transfer python
 def readConfig(filename:str) :
 	with open(file=filename, mode='r') as f:
@@ -12,6 +13,7 @@ def readConfig(filename:str) :
 #save the data
 def writeConfig(filename:str,data:list) :
 	string = ""
-	string += f"{x}\n" for x in data
+	for x in data:
+		string += x + "\n"
 	with open(file=filename, mode='w') as f:
 		f.write(string)
