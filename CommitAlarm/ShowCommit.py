@@ -30,7 +30,7 @@ def check_user(user):
 		user = input("What is your username? ")
 	return user
 
-def save_follow(user:str,option:str = 'following'):
+def update_follow(user:str,option:str = 'following'):
 	option_list = ['following','follower']
 	try:
 		if option not in option_list:
@@ -46,15 +46,15 @@ def save_follow(user:str,option:str = 'following'):
 					follow_list.append(follow_data['login'])
 		return follow_list
 
+
+
+def show_commit(user):
+	pass
+
 def following_github(user):
 	'''
 	'''
-
-	# users = users.strip()
-	# show_clear(str(followingList))
 	list_push = []
-
-	#O(n^2), Sorry, I revise the big afterwards .
 	# for following_elem in followingList:
 	# 	time = []
 	# 	who = following_elem["login"]
