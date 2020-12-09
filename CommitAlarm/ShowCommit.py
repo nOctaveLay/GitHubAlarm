@@ -9,62 +9,84 @@ import sys,json
 # from PyQt5.QtWidgets import (QWidget, QLabel, QGridLayout, QApplication)
 # from PyQt5.QtCore import QTimer
 
-def pass_internetfile(users:str,textfile:str,setting:str):
-	url = f"https://api.github.com/users/{users}{setting}"
-	opener = urlopen(url).read()
-	
-	with open(textfile,'wb') as openfile:
-		openfile.write(opener)
 
-	result = readConfig(textfile)
-	return result
+def pass_internetfile(user:str,option:str):
+	'''
+	read data in url -> decode utf-8 -> return string.
+	'''
+	url = f"https://api.github.com/users/{user}/{option}" #need modification.
+	opener = urlopen(url).read().decode('utf-8')
+	return opener
 
-def following_github():
-	# users = input("What is your username? ")
-	# users = users.strip()
-	users = 'nOctaveLay'
-	while not users:
+
+def check_user(user):
+	'''
+	Is user github real user?
+	if true: return user_name
+	else: request user_name
+	'''
+	while not user:
 		print("input again")
-		users = input("What is your username? ")
-		
-	followingList = pass_internetfile(users,"follower.txt","/following")
-	print(followingList)
+		user = input("What is your username? ")
+	return user
+
+def save_follow(user:str,option:str = 'following'):
+	option_list = ['following','follower']
+	try:
+		if option not in option_list:
+			raise ValueError
+	except ValueError as e:
+		print(e,":",option,"does not in",option_list)
+	else:
+		url_data = pass_internetfile(user,option)
+		json_data = readConfig(url_data)
+		follow_list = []
+		if json_data != None: 
+			for follow_data in json_data:
+					follow_list.append(follow_data['login'])
+		return follow_list
+
+def following_github(user):
+	'''
+	'''
+
+	# users = users.strip()
 	# show_clear(str(followingList))
 	list_push = []
 
 	#O(n^2), Sorry, I revise the big afterwards .
-	for following_elem in followingList:
-		time = []
-		who = following_elem["login"]
-		result = pass_internetfile(who,"followers_events.txt","/events")
-		for num in range(len(result)):
-			date = result[num]["created_at"]
-			date = date.split("T")
-			now_time = datetime.date.today()
-			if date[0] == now_time.isoformat():
-				time.append("T".join(date))
-		commit_number = len(time)
-		who_commit = {"who":who,"commit_number":commit_number}
-		list_push.append(who_commit)
+	# for following_elem in followingList:
+	# 	time = []
+	# 	who = following_elem["login"]
+	# 	result = pass_internetfile(who,"followers_events.txt","/events")
+	# 	for num in range(len(result)):
+	# 		date = result[num]["created_at"]
+	# 		date = date.split("T")
+	# 		now_time = datetime.date.today()
+	# 		if date[0] == now_time.isoformat():
+	# 			time.append("T".join(date))
+	# 	commit_number = len(time)
+	# 	who_commit = {"who":who,"commit_number":commit_number}
+	# 	list_push.append(who_commit)
 	return list_push
 
 #Qt5 GUI
 
 
 # class show_commit(QWidget):
-	
+
 # 	def __init__(self):
 # 		super().__init__()
 # 		self.list = following_github()
 # 		self.initUI()
-		
+
 # 	def initUI(self):
 # 		self.time = 60
 # 		self.Label_follow = []
 # 		self.setting_commit()
-# 		self.setWindowTitle('Show Commit')	
+# 		self.setWindowTitle('Show Commit')
 # 		self.show()
-	
+
 # 	def setting_commit(self):
 # 		self.grid = QGridLayout()
 # 		self.grid.setSpacing(10)
@@ -72,9 +94,9 @@ def following_github():
 # 		for list_num in range(list_size):
 # 			self.Label_follow.append(QLabel(self.list[list_num]["who"]+"\'s commit is "+str(self.list[list_num]["commit_number"])))
 # 			self.grid.addWidget(self.Label_follow[list_num],list_num,0)
-# 		self.setLayout(self.grid) 
+# 		self.setLayout(self.grid)
 # 		self.setGeometry(list_size*50, list_size*50, 350, 300)
-		
+
 # 	def update_time(self):
 # 		self.time -= 1
 # 		if self.time < 1:
@@ -83,8 +105,10 @@ def following_github():
 # 			self.setting_commit()
 
 if __name__ == '__main__':
-	
-	print(following_github())
+	# users = input("What is your username? ")
+	user = 'nOctaveLay'
+	print(save_follow(user))
+	# print(following_github(user))
 	# app = QApplication(sys.argv)
 	# ex = show_commit()
 	# timer = QTimer()

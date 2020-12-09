@@ -5,9 +5,9 @@ import json
 #<filename>->jsonfile transfer python
 
 
-def readConfig(file:str) :
+def readConfig(data_string:str) :
 	try:
-		js = json.load(file)
+		js = json.loads(data_string)
 		return js
 	except ValueError as e:
 		print("invalid json: %s" % e)
