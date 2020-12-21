@@ -5,6 +5,7 @@ from urllib.request import *
 from ReadWrite import *
 import datetime
 import sys,json
+import threading
 
 # from PyQt5.QtWidgets import (QWidget, QLabel, QGridLayout, QApplication)
 # from PyQt5.QtCore import QTimer
@@ -15,6 +16,7 @@ def pass_internetfile(user:str,option:str):
 	read data in url -> decode utf-8 -> return string.
 	'''
 	url = f"https://api.github.com/users/{user}/{option}" #need modification.
+	print(url)
 	opener = urlopen(url).read().decode('utf-8')
 	return opener
 
@@ -46,28 +48,26 @@ def update_follow(user:str,option:str = 'following'):
 					follow_list.append(follow_data['login'])
 		return follow_list
 
-
-
 def show_commit(user):
 	pass
 
-def following_github(user):
+def following_github(following_list):
 	'''
 	'''
 	list_push = []
-	# for following_elem in followingList:
-	# 	time = []
-	# 	who = following_elem["login"]
-	# 	result = pass_internetfile(who,"followers_events.txt","/events")
-	# 	for num in range(len(result)):
-	# 		date = result[num]["created_at"]
-	# 		date = date.split("T")
-	# 		now_time = datetime.date.today()
-	# 		if date[0] == now_time.isoformat():
-	# 			time.append("T".join(date))
-	# 	commit_number = len(time)
-	# 	who_commit = {"who":who,"commit_number":commit_number}
-	# 	list_push.append(who_commit)
+	for member in following_list:
+		time = []
+		event_url_data = pass_internetfile(member,"events")
+		event_json_data = readConfig(event_url_data)
+		for event_data in event_json_data:
+			date = event_data["created_at"]
+			date = date.split("T")
+			now_time = datetime.date.today()
+			if date[0] == now_time.isoformat():
+				time.append("T".join(date))
+		commit_number = len(time)
+		who_commit = {"name":member,"commit_number":commit_number}
+		list_push.append(who_commit)
 	return list_push
 
 #Qt5 GUI
@@ -107,7 +107,10 @@ def following_github(user):
 if __name__ == '__main__':
 	# users = input("What is your username? ")
 	user = 'nOctaveLay'
-	print(save_follow(user))
+	follow_list = update_follow(user)
+	content = following_github(follow_list)
+
+
 	# print(following_github(user))
 	# app = QApplication(sys.argv)
 	# ex = show_commit()
@@ -115,4 +118,3 @@ if __name__ == '__main__':
 	# timer.timeout.connect(ex.update_time)
 	# timer.start(1000)
 	# sys.exit(app.exec_())
-
