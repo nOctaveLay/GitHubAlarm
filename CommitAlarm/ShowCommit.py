@@ -6,7 +6,7 @@ from ReadWrite import *
 import datetime
 import sys,json
 import threading
-
+import configparser
 # from PyQt5.QtWidgets import (QWidget, QLabel, QGridLayout, QApplication)
 # from PyQt5.QtCore import QTimer
 
@@ -16,7 +16,6 @@ def pass_internetfile(user:str,option:str):
 	read data in url -> decode utf-8 -> return string.
 	'''
 	url = f"https://api.github.com/users/{user}/{option}" #need modification.
-	print(url)
 	opener = urlopen(url).read().decode('utf-8')
 	return opener
 
@@ -48,8 +47,11 @@ def update_follow(user:str,option:str = 'following'):
 					follow_list.append(follow_data['login'])
 		return follow_list
 
-def show_commit(user):
-	pass
+def show_commit(following_list):
+	print("show commit")
+	for member in following_list:
+		if 'name' in member and 'commit_number' in member:
+			print(member['name'],"-",member['commit_number'])
 
 def following_github(following_list):
 	'''
@@ -105,11 +107,12 @@ def following_github(following_list):
 # 			self.setting_commit()
 
 if __name__ == '__main__':
-	# users = input("What is your username? ")
-	user = 'nOctaveLay'
+	config = configparser.ConfigParser()
+	config.read('init.ini')
+	user = config['DEFAULT']['user']
 	follow_list = update_follow(user)
 	content = following_github(follow_list)
-
+	show_commit(content)
 
 	# print(following_github(user))
 	# app = QApplication(sys.argv)
