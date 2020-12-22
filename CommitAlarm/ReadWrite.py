@@ -1,17 +1,25 @@
 #to change the file/string by using json to python.
 import json
-#maybe not useful. sorry
-from HTTPBA import *
+# from HTTPBA import *
+
 #<filename>->jsonfile transfer python
-def readConfig(filename:str) :
-	with open(file=filename, mode='r') as f:
-		temp = f.read().replace('\'','')[1:]
-		js = json.loads(temp)
-	return js
+
+
+def readConfig(data_string:str) :
+	try:
+		js = json.loads(data_string)
+		return js
+	except ValueError as e:
+		print("invalid json: %s" % e)
+		return None
+	except AttributeError as e:
+		print("Attribute Error: %s" %e)
+		return None
 
 #save the data
 def writeConfig(filename:str,data:list) :
 	string = ""
-	string += f"{x}\n" for x in data
+	for x in data:
+		string += (x+"\n")
 	with open(file=filename, mode='w') as f:
 		f.write(string)
