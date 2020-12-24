@@ -52,7 +52,7 @@ def show_commit(following_list):
 		if 'name' in member and 'commit_number' in member:
 			print(member['name'],"-",member['commit_number'])
 
-def following_github(following_list):
+def today_following_commit_num(following_list):
 	'''
 	'''
 	list_push = []
@@ -80,5 +80,5 @@ if __name__ == '__main__':
 	user = 'nOctaveLay'
 	
 	follow_list = update_follow(user)
-	content = following_github(follow_list)
+	content = today_following_commit_num(follow_list)
 	show_commit(content)
