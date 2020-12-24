@@ -1,9 +1,13 @@
 #to use HTTPBasicAuth Handler,build_opener,install_opener, import 
-from urllib.request import *
-def pass_internetfile():
+from getpass import getpass
+from urllib.request import HTTPBasicAuthHandler,build_opener,install_opener,urlopen
+
+__all__ = ['pass_internetfile_plus_password','pass_internetfile']
+
+def pass_internetfile_plus_password():
 	#receive the user's name & password
 	users = input("What is your username? ")
-	passwd = input("password? ")
+	passwd = getpass("password? ")
 
 	#make HTTPBasicAuthHandler, object => it can add the password. 
 	auth_handler = HTTPBasicAuthHandler()
@@ -26,3 +30,10 @@ def pass_internetfile():
 	with open("internetfile.txt",'w') as f:
 		f.write(str(read))
 
+def pass_internetfile(user:str,option:str):
+	'''
+	read data in url -> decode utf-8 -> return string.
+	'''
+	url = f"https://api.github.com/users/{user}/{option}" #need modification.
+	opener = urlopen(url).read().decode('utf-8')
+	return opener
