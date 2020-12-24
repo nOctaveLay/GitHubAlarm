@@ -1,5 +1,7 @@
 import json
 from HTTPBA import *
+
+
 CONFIG_FILE="internetfile.txt" #hidden
 CONFIG={}
 

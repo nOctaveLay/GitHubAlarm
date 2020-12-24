@@ -23,3 +23,4 @@ def writeConfig(filename:str,data:list) :
 		string += (x+"\n")
 	with open(file=filename, mode='w') as f:
 		f.write(string)
+

@@ -1,23 +1,17 @@
 # IT IS not using "github3.py"
 #but I know that using "github3.py" is easy. So I append the file, "github3.py" to Directory "USEGITHUB3"
-from urllib.request import *
-from ReadWrite import *
 import datetime
-import sys,json
-import threading
 import configparser
+import json
+import sys
+from urllib.request import *
+
+from ReadWrite import *
+from HTTPBA import *
 # from PyQt5.QtWidgets import (QWidget, QLabel, QGridLayout, QApplication)
 # from PyQt5.QtCore import QTimer
 
-
-def pass_internetfile(user:str,option:str):
-	'''
-	read data in url -> decode utf-8 -> return string.
-	'''
-	url = f"https://api.github.com/users/{user}/{option}" #need modification.
-	opener = urlopen(url).read().decode('utf-8')
-	return opener
-
+__all__ = [ 'check_user','update_follow','show_commit','today_following_commit_num']
 
 def check_user(user):
 	'''
@@ -46,11 +40,12 @@ def update_follow(user:str,option:str = 'following'):
 					follow_list.append(follow_data['login'])
 		return follow_list
 
+
 def show_commit(following_list):
 	print("show commit")
 	for member in following_list:
-		if 'name' in member and 'commit_number' in member:
-			print(member['name'],"-",member['commit_number'])
+		if 'name' in member and 'contribution_number' in member:
+			print(member['name'],"-",member['contribution_number'])
 
 def today_following_commit_num(following_list):
 	'''
@@ -67,18 +62,6 @@ def today_following_commit_num(following_list):
 			if date[0] == now_time.isoformat():
 				time.append("T".join(date))
 		commit_number = len(time)
-		who_commit = {"name":member,"commit_number":commit_number}
+		who_commit = {"name":member,"contribution_number":commit_number}
 		list_push.append(who_commit)
 	return list_push
-
-
-
-if __name__ == '__main__':
-	# config = configparser.ConfigParser()
-	# config.read('init.ini')
-	# user = config['DEFAULT']['user']
-	user = 'nOctaveLay'
-	
-	follow_list = update_follow(user)
-	content = today_following_commit_num(follow_list)
-	show_commit(content)
