@@ -27,8 +27,7 @@ def pass_internetfile_plus_password():
 	read = opener.open(urlu).read()
 
 	#file open, that is written user's received_events
-	with open("internetfile.txt",'w') as f:
-		f.write(str(read))
+	return read.decode('utf-8')
 
 def pass_internetfile(user:str,option:str):
 	'''
