@@ -7,11 +7,11 @@ import sys
 from urllib.request import *
 
 from ReadWrite import *
-from HTTPBA import *
+from UrlTreat import *
 # from PyQt5.QtWidgets import (QWidget, QLabel, QGridLayout, QApplication)
 # from PyQt5.QtCore import QTimer
 
-__all__ = [ 'check_user','update_follow','show_commit','today_following_commit_num']
+__all__ = ['check_user','update_follow','show_commit','today_following_commit_num']
 
 def check_user(user):
 	'''
@@ -40,16 +40,7 @@ def update_follow(user:str,option:str = 'following'):
 					follow_list.append(follow_data['login'])
 		return follow_list
 
-
-def show_commit(following_list):
-	print("show commit")
-	for member in following_list:
-		if 'name' in member and 'contribution_number' in member:
-			print(member['name'],"-",member['contribution_number'])
-
 def today_following_commit_num(following_list):
-	'''
-	'''
 	list_push = []
 	for member in following_list:
 		time = []
@@ -65,3 +56,9 @@ def today_following_commit_num(following_list):
 		who_commit = {"name":member,"contribution_number":commit_number}
 		list_push.append(who_commit)
 	return list_push
+
+def show_commit(following_list):
+	print("show commit")
+	for member in following_list:
+		if 'name' in member and 'contribution_number' in member:
+			print(member['name'],"-",member['contribution_number'])
