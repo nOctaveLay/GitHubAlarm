@@ -1,7 +1,3 @@
 
 .vscode/settings.json
-CommitAlarm/__pycache__/HTTPBA.cpython-38.pyc
-CommitAlarm/__pycache__/ReadWrite.cpython-38.pyc
-GitAlarm/__pycache__/Changeform.cpython-38.pyc
-GitAlarm/__pycache__/HTTPBA.cpython-38.pyc
-GitAlarm/__pycache__/ReadWrite.cpython-38.pyc
+CommitAlarm/__pycache__
