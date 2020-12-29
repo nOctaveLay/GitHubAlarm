@@ -11,7 +11,7 @@ from UrlTreat import *
 # from PyQt5.QtWidgets import (QWidget, QLabel, QGridLayout, QApplication)
 # from PyQt5.QtCore import QTimer
 
-__all__ = ['check_user','update_follow','show_commit','today_following_commit_num']
+__all__ = ['check_user','update_follow','show_commit','following_commit_num']
 
 def check_user(user):
 	'''
@@ -32,7 +32,7 @@ def update_follow(user:str,option:str = 'following'):
 	except ValueError as e:
 		print(e,":",option,"does not in",option_list)
 	else:
-		url_data = pass_internetfile(user,option)
+		url_data = read_data_from_url(f"https://api.github.com/users/{user}/{option}")
 		json_data = readConfig(url_data)
 		follow_list = []
 		if json_data != None: 
@@ -40,17 +40,17 @@ def update_follow(user:str,option:str = 'following'):
 					follow_list.append(follow_data['login'])
 		return follow_list
 
-def today_following_commit_num(following_list):
+def following_commit_num(following_list,time = None):
 	list_push = []
 	for member in following_list:
 		time = []
-		event_url_data = pass_internetfile(member,"events")
+		event_url_data = read_data_from_url(f"https://api.github.com/users/{member}/events")
 		event_json_data = readConfig(event_url_data)
 		for event_data in event_json_data:
 			date = event_data["created_at"]
 			date = date.split("T")
-			now_time = datetime.date.today()
-			if date[0] == now_time.isoformat():
+			time = datetime.date.today() if time == None else time
+			if date[0] == time.isoformat():
 				time.append("T".join(date))
 		commit_number = len(time)
 		who_commit = {"name":member,"contribution_number":commit_number}

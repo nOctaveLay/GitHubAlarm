@@ -7,11 +7,11 @@ if __name__ == '__main__':
 	# config.read('init.ini')
 	# user = config['DEFAULT']['user']
 	# follow_list = update_follow(user)
-	# content = today_following_commit_num(follow_list)
+	# content = following_commit_num(follow_list)
 	# show_commit(content)
 
 	config = ConfigParser()
 	config.read('config.ini')
-	user = config['name']
-	received_event = received_events()
+	user = config['Default']['name']
+	received_event = received_events(user)
 	show_received_event(received_event)	

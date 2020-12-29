@@ -2,7 +2,7 @@
 from getpass import getpass
 from urllib.request import HTTPBasicAuthHandler,build_opener,install_opener,urlopen
 
-__all__ = ['pass_internetfile_plus_password','pass_internetfile']
+__all__ = ['pass_internetfile_plus_password','read_data_from_url']
 
 def pass_internetfile_plus_password():
 	#receive the user's name & password
@@ -29,10 +29,9 @@ def pass_internetfile_plus_password():
 	#file open, that is written user's received_events
 	return read.decode('utf-8')
 
-def pass_internetfile(user:str,option:str):
+def read_data_from_url(url):
 	'''
 	read data in url -> decode utf-8 -> return string.
 	'''
-	url = f"https://api.github.com/users/{user}/{option}" #need modification.
 	opener = urlopen(url).read().decode('utf-8')
 	return opener

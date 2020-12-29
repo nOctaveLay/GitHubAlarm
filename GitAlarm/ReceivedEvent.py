@@ -1,11 +1,12 @@
-from UrlTreat import pass_internetfile_plus_password
+from UrlTreat import read_data_from_url
 from ReadWrite import readConfig
 
 __all__ = ['received_events','show_received_event']
 
-def received_events():
+def received_events(user:str):
+
     resultList = list()
-    received_events_txt = pass_internetfile_plus_password()
+    received_events_txt = read_data_from_url(f'http://api.github.com/users/{user}/received_events')
     received_list = readConfig(received_events_txt) 
     goal_show = 10
     selected_list = received_list[:goal_show]
@@ -23,7 +24,7 @@ def received_events():
     # saveData.reverse()
     # writeConfig("save.txt",saveData)
 
-def show_received_event(receivedList):
+def show_received_event(receivedList:list):
 	print("show received event")
 	for events in receivedList:
 		if ('Writer' in events) and ('EventType' in events) and ('RepoName' in events) and ('Created' in events):
