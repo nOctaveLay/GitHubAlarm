@@ -1,9 +1,7 @@
 #to change the file/string by using json to python.
 import json
-# from HTTPBA import *
-
 #<filename>->jsonfile transfer python
-
+__all__ = ['readConfig','writeConfig']
 
 def readConfig(data_string:str) :
 	try:
