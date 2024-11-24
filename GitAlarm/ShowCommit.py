@@ -15,7 +15,10 @@ __all__ = ['check_user','update_follow','show_commit','following_commit_num']
 
 def check_user(user):
 	'''
-	Is user github real user?
+	check user is github REAL user
+
+	Return:
+		user_name
 	if true: return user_name
 	else: request user_name
 	'''
