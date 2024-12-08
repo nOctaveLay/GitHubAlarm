@@ -8,3 +8,4 @@
 
 ## How to use?
 
+python GitAlarm
